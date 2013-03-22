@@ -13,7 +13,7 @@ function os2web_selfservicelinks_feeds_importer_default() {
   $feeds_importer = new stdClass();
   $feeds_importer->disabled = FALSE; /* Edit this to true to make a default feeds_importer disabled initially */
   $feeds_importer->api_version = 1;
-  $feeds_importer->id = 'borger_online';
+  $feeds_importer->id = 'os2web_borgeronline_import';
   $feeds_importer->config = array(
     'name' => 'Borgeronline',
     'description' => 'Importerer selfservicelinks fra Borgeronline (Dafolo)',
@@ -61,7 +61,7 @@ password=706web',
     'processor' => array(
       'plugin_key' => 'FeedsNodeProcessor',
       'config' => array(
-        'content_type' => 'selfservicelinks',
+        'content_type' => 'os2web_base_selfservice_link',
         'expire' => '-1',
         'author' => 0,
         'mappings' => array(
@@ -102,7 +102,7 @@ password=706web',
     'import_on_create' => 1,
     'process_in_background' => 0,
   );
-  $export['borger_online'] = $feeds_importer;
+  $export['os2web_borgeronline_import'] = $feeds_importer;
 
   return $export;
 }
