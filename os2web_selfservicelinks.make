@@ -18,5 +18,5 @@ projects[features][version] = "2.0-beta2"
 ;Views
 
 ; Basic
-projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.3"
+# projects[ctools][subdir] = "contrib"
+# projects[ctools][version] = "1.3"
