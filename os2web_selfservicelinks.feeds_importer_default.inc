@@ -18,19 +18,19 @@ function os2web_selfservicelinks_feeds_importer_default() {
     'name' => 'Borgeronline',
     'description' => 'Importerer selfservicelinks fra Borgeronline (Dafolo)',
     'fetcher' => array(
-      'plugin_key' => 'FeedsSOAPFetcher',
+      'plugin_key' => 'FeedsHTTPFetcher',
       'config' => array(
-        'wsdl_url' => 'https://www.borgeronline.dk/Webservice/Service.asmx?wsdl',
-        'service_method_name' => 'menuXML',
-        'method_parameters' => 'municipalityId=706
-password=706web',
+        'auto_detect_feeds' => FALSE,
+        'use_pubsubhubbub' => FALSE,
+        'designated_hub' => '',
+        'request_timeout' => NULL,
       ),
     ),
     'parser' => array(
       'plugin_key' => 'FeedsXPathParserXML',
       'config' => array(
         'sources' => array(
-          'xpathparser:0' => 'concat( filnavn, netborger )',
+          'xpathparser:0' => 'blanketId',
           'xpathparser:1' => 'titel',
           'xpathparser:2' => 'netborger',
           'xpathparser:3' => '\'Borgeronline\'',
@@ -46,6 +46,8 @@ password=706web',
         'context' => '//blanket',
         'exp' => array(
           'errors' => 0,
+          'tidy' => 0,
+          'tidy_encoding' => 'UTF8',
           'debug' => array(
             'context' => 0,
             'xpathparser:0' => 0,
@@ -61,7 +63,6 @@ password=706web',
     'processor' => array(
       'plugin_key' => 'FeedsNodeProcessor',
       'config' => array(
-        'content_type' => 'os2web_base_selfservice_link',
         'expire' => '-1',
         'author' => 0,
         'mappings' => array(
@@ -77,22 +78,25 @@ password=706web',
           ),
           2 => array(
             'source' => 'xpathparser:2',
-            'target' => 'field_gruppe_id',
+            'target' => 'field_os2web_base_field_grp_id',
             'unique' => FALSE,
           ),
           3 => array(
             'source' => 'xpathparser:3',
-            'target' => 'field_kilde',
+            'target' => 'field_os2web_base_field_source',
             'unique' => FALSE,
           ),
           4 => array(
             'source' => 'xpathparser:4',
-            'target' => 'field_selvbetjening_direkte',
+            'target' => 'field_os2web_base_field_direct',
             'unique' => FALSE,
           ),
         ),
         'update_existing' => '2',
         'input_format' => 'plain_text',
+        'authorize' => 1,
+        'skip_hash_check' => 0,
+        'bundle' => 'os2web_base_selfservice_link',
       ),
     ),
     'content_type' => '',
